@@ -1,0 +1,80 @@
+
+
+5.        Create an INVOICE database and having following tables.
+
+    Customer(id, name, address, city, ph_no)
+                      
+                      
+                      
+  mysql> create table Customer(id int primary key,name varchar(10),address varchar(10),city varchar(20),ph_no int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc Customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | NO   | PRI | NULL    |       |
+| name    | varchar(10) | YES  |     | NULL    |       |
+| address | varchar(10) | YES  |     | NULL    |       |
+| city    | varchar(20) | YES  |     | NULL    |       |
+| ph_no   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+                    
+   
+                      
+
+      Product(pid,  pname, price (default 0))
+      
+      
+      
+ mysql> create table Product(pid int primary key,pname varchar(10),price int default 0);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc Product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   | PRI | NULL    |       |
+| pname | varchar(10) | YES  |     | NULL    |       |
+| price | int         | YES  |     | 0       |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+     
+      
+ 
+
+     Invoice_master(inv_id, cust_id(FK), inv_date)
+     
+     
+     mysql> create table invoice_master(inv_id int primary key,cust_id int,inv_date date,foreign key (cust_id) References Customer(id));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc invoice_master;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| inv_id   | int  | NO   | PRI | NULL    |       |
+| cust_id  | int  | YES  | MUL | NULL    |       |
+| inv_date | date | YES  |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+    Invoice_item(inv_id (FK),  pid(FK), quantity)
+
+
+mysql> create table invoice_item(quantity int,inv_id int,pid int,foreign key(inv_id) References invoice_master(inv_id),foreign key(pid) References Product(pid));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc invoice_item;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| quantity | int  | YES  |     | NULL    |       |
+| inv_id   | int  | YES  | MUL | NULL    |       |
+| pid      | int  | YES  | MUL | NULL    |       |
++----------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
