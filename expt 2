@@ -1,0 +1,112 @@
+  DML -INSERT
+
+                     Insert values in INVOICE database. 
+
+Value insertion................
+-> customer_id  10001, 10002, 10003 etc
+-> in_id   101,102, 103, etc
+-> name of city (calicut, ekm, tvm, etc..)
+-> some quantity should be less than 2
+-> product names....pen, pencil, soap, etc..
+-> some phone number should be null
+-> some price between 50 rs and 150 rs
+-> inv_date between 1st jan 2023 to 31st dec 2024
+-> some customers purchase more than 2 products
+
+
+
+mysql> insert into Customer(id,name,address,city,ph_no)values(10001,'abc','abc_house','calicut',1234567890),(10002,'xyz','xyz_house','ekm',1590437612),(10003,'pqr','pqr_house','tkm',923654101),(10004,'efg','efg_house','kdy',234095216);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+mysql> insert into Customer(id,name,address,city)values(10005,'mno','mno_house','ktm');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Customer;
++-------+------+-----------+---------+------------+
+| id    | name | address   | city    | ph_no      |
++-------+------+-----------+---------+------------+
+| 10001 | abc  | abc_house | calicut | 1234567890 |
+| 10002 | xyz  | xyz_house | ekm     | 1590437612 |
+| 10003 | pqr  | pqr_house | tkm     |  923654101 |
+| 10004 | efg  | efg_house | kdy     |  234095216 |
+| 10005 | mno  | mno_house | ktm     |       NULL |
++-------+------+-----------+---------+------------+
+5 rows in set (0.00 sec)
+
+                            ----------------------------------------------------------------------------------------
+
+
+
+mysql> insert into Product(pid,pname,price)values(101,'pen',10),(102,'pencil',25),(103,'soap',55),(104,'book',35),(105,'scale',15);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from Product;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+| 101 | pen    |    10 |
+| 102 | pencil |    25 |
+| 103 | soap   |    55 |
+| 104 | book   |    35 |
+| 105 | scale  |    15 |
++-----+--------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+                 --------------------------------------------------------------------------------------------------
+
+
+
+mysql> insert into invoice_master(inv_id,cust_id,inv_date)values(101,10001,'2023-01-10'),(102,10002,'2023-03-23'),(103,10003,'2023-08-16'),(104,10004,'2024-01-27'),(105,10005,'2024-12-12');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from invoice_master;
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    101 |   10001 | 2023-01-10 |
+|    102 |   10002 | 2023-03-23 |
+|    103 |   10003 | 2023-08-16 |
+|    104 |   10004 | 2024-01-27 |
+|    105 |   10005 | 2024-12-12 |
++--------+---------+------------+
+5 rows in set (0.00 sec)
+
+
+
+             -----------------------------------------------------------------------------------------------------
+
+
+
+mysql> insert into invoice_item(inv_id,quantity,pid)values(101,1,102),(102,3,104),(103,1,105),(104,2,103),(105,3,102);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    101 |  102 |        1 |
+|    102 |  104 |        3 |
+|    103 |  105 |        1 |
+|    104 |  103 |        2 |
+|    105 |  102 |        3 |
++--------+------+----------+
+5 rows in set (0.00 sec)
+
+
+
+
+               ----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
