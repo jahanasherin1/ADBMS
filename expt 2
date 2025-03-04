@@ -240,7 +240,7 @@ mysql> select * from invoice_item;
                      -----------------------------------------------------------------------
 
 
-
+//CHECK INVOICE ITEM TABLE
 
 
 
