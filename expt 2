@@ -82,10 +82,9 @@ mysql> select * from invoice_master;
 
 
 
-mysql> insert into invoice_item(inv_id,quantity,pid)values(101,1,102),(102,3,104),(103,1,105),(104,2,103),(105,3,102);
-Query OK, 5 rows affected (0.01 sec)
+mysql> insert into invoice_item(inv_id,quantity,pid)values(101,1,102),(102,3,104),(101,1,105),(104,2,103),(105,3,102);
+Query OK, 5 rows affected (0.00 sec)
 Records: 5  Duplicates: 0  Warnings: 0
-
 
 mysql> select * from invoice_item;
 +--------+------+----------+
@@ -93,11 +92,12 @@ mysql> select * from invoice_item;
 +--------+------+----------+
 |    101 |  102 |        1 |
 |    102 |  104 |        3 |
-|    103 |  105 |        1 |
+|    101 |  105 |        1 |
 |    104 |  103 |        2 |
 |    105 |  102 |        3 |
 +--------+------+----------+
 5 rows in set (0.00 sec)
+
 
 
 
@@ -219,7 +219,7 @@ mysql> select * from Customer;
 
 
 mysql> update invoice_item set quantity=6 where inv_id=104;
-Query OK, 1 row affected (0.00 sec)
+Query OK, 1 row affected (0.01 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
 mysql> select * from invoice_item;
@@ -228,11 +228,13 @@ mysql> select * from invoice_item;
 +--------+------+----------+
 |    101 |  102 |        1 |
 |    102 |  104 |        3 |
-|    103 |  105 |        1 |
+|    101 |  105 |        1 |
 |    104 |  103 |        6 |
 |    105 |  102 |        3 |
 +--------+------+----------+
 5 rows in set (0.00 sec)
+
+
 
 
 
