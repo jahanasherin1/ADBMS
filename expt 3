@@ -184,7 +184,7 @@ mysql> SHOW GRANTS FOR 'frina'@'localhost';
 
 
 
-
+//VERIFIED
 
 
 
