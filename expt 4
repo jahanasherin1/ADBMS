@@ -1,0 +1,113 @@
+a) ACCESSING DATABASE:  (SELECT, Filtering using WHERE, ORDER BY Clauses)
+
+
+
+1.    List all invoice items, avoid duplicates.
+
+
+
+mysql> select distinct quantity from invoice_item;
++----------+
+| quantity |
++----------+
+|        1 |
+|        3 |
+|        2 |
++----------+
+3 rows in set (0.00 sec)
+
+
+
+
+2.    List the invoice details from 1st January 2024 to 31st march 2024
+
+
+
+
+mysql> select * from invoice_master where inv_date>='2024-01-01' and inv_date<='2024-03-31';
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    104 |   10004 | 2024-01-27 |
++--------+---------+------------+
+1 row in set (0.00 sec)
+
+
+
+
+3.    List the customer details who not live in ‘tvm’.
+
+
+mysql> select * from Customer where city!='tkm';
++-------+------+-----------+---------+------------+
+| id    | name | address   | city    | ph_no      |
++-------+------+-----------+---------+------------+
+| 10001 | abc  | abc_house | calicut | 1234567890 |
+| 10002 | xyz  | xyz_house | ekm     | 1590437612 |
+| 10004 | efg  | efg_house | kdy     |  234095216 |
+| 10005 | mno  | mno_house | ktm     |       NULL |
++-------+------+-----------+---------+------------+
+4 rows in set (0.00 sec)
+
+
+
+4.    List the customers who have no phone number.
+
+
+mysql> select * from Customer where ph_no is null;
++-------+------+-----------+------+-------+
+| id    | name | address   | city | ph_no |
++-------+------+-----------+------+-------+
+| 10005 | mno  | mno_house | ktm  |  NULL |
++-------+------+-----------+------+-------+
+1 row in set (0.00 sec)
+
+  
+  
+  
+5.    Display customer names in descending order.
+
+
+
+mysql> select name from Customer order by name desc;
++------+
+| name |
++------+
+| xyz  |
+| pqr  |
+| mno  |
+| efg  |
+| abc  |
++------+
+5 rows in set (0.00 sec)
+
+
+
+
+6.    Display the customer details sorted in ascending by city and descending by names.
+
+
+
+mysql> select * from Customer order by city asc,name desc;
++-------+------+-----------+---------+------------+
+| id    | name | address   | city    | ph_no      |
++-------+------+-----------+---------+------------+
+| 10001 | abc  | abc_house | calicut | 1234567890 |
+| 10002 | xyz  | xyz_house | ekm     | 1590437612 |
+| 10004 | efg  | efg_house | kdy     |  234095216 |
+| 10005 | mno  | mno_house | ktm     |       NULL |
+| 10003 | pqr  | pqr_house | tkm     |  923654101 |
++-------+------+-----------+---------+------------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+7.    Find the customer names who have ‘e’ or ‘a’ in them and at least 3 characters in length
+
+
+
+
+
+8.    List the names of customers their names have ‘r’ in second position.
