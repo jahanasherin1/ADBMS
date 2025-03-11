@@ -1,0 +1,200 @@
+a) TCL COMMANDS
+
+
+          1.    Commit
+          
+          
+          
+mysql> set autocommit=off;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into Customer(id,name,address,city,ph_no)values(10007,'hjkr','hihg','wdoof',123789690);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from Customer;
++-------+------+-----------+-------+------------+
+| id    | name | address   | city  | ph_no      |
++-------+------+-----------+-------+------------+
+| 10002 | xyz  | xyz_house | ekm   | 1590437612 |
+| 10003 | cdr  | hhg       | wdf   |  123456789 |
+| 10004 | efg  | uvw_house | mkm   |  678942567 |
+| 10007 | hjkr | hihg      | wdoof |  123789690 |
++-------+------+-----------+-------+------------+
+4 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
+
+          
+          2.    Rollback
+          
+          
+mysql> insert into Customer(id,name,address,city,ph_no)values(10003,'cdr','hhg','wdf',123456789);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from Customer;
++-------+------+-----------+------+------------+
+| id    | name | address   | city | ph_no      |
++-------+------+-----------+------+------------+
+| 10002 | xyz  | xyz_house | ekm  | 1590437612 |
+| 10003 | cdr  | hhg       | wdf  |  123456789 |
+| 10004 | efg  | uvw_house | mkm  |  678942567 |
++-------+------+-----------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from Customer;
++-------+------+-----------+------+------------+
+| id    | name | address   | city | ph_no      |
++-------+------+-----------+------+------------+
+| 10002 | xyz  | xyz_house | ekm  | 1590437612 |
+| 10004 | efg  | uvw_house | mkm  |  678942567 |
++-------+------+-----------+------+------------+
+2 rows in set (0.00 sec)   
+
+
+
+
+          
+          3.    Savepoint
+          
+          
+mysql> insert into Customer(id,name,address,city,ph_no)values(10003,'cdr','hhg','wdf',123456789);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into Customer(id,name,address,city,ph_no)values(10005,'hjkr','hihg','wdoof',123789690);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into Customer(id,name,address,city,ph_no)values(10007,'hjkr','hihg','wdoof',123789690);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s3;
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> rollback to s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from Customer;
++-------+------+-----------+-------+------------+
+| id    | name | address   | city  | ph_no      |
++-------+------+-----------+-------+------------+
+| 10002 | xyz  | xyz_house | ekm   | 1590437612 |
+| 10003 | cdr  | hhg       | wdf   |  123456789 |
+| 10004 | efg  | uvw_house | mkm   |  678942567 |
+| 10005 | hjkr | hihg      | wdoof |  123789690 |
++-------+------+-----------+-------+------------+
+4 rows in set (0.00 sec)
+
+mysql> rollback to s1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from Customer;
++-------+------+-----------+------+------------+
+| id    | name | address   | city | ph_no      |
++-------+------+-----------+------+------------+
+| 10002 | xyz  | xyz_house | ekm  | 1590437612 |
+| 10003 | cdr  | hhg       | wdf  |  123456789 |
+| 10004 | efg  | uvw_house | mkm  |  678942567 |
++-------+------+-----------+------+------------+
+3 rows in set (0.00 sec)
+          
+          
+                                 ----------------------------------------------------------------
+  
+  
+b) DCL COMMAND
+ Create two users user1, user2
+ 
+ 
+mysql> CREATE USER jahana@'localhost' IDENTIFIED BY 'Jahana@123';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE USER frina@'localhost' IDENTIFIED BY 'Frina@123';
+Query OK, 0 rows affected (0.01 sec) 
+
+
+ 
+
+1.              GRANT
+
+Give insert and select privilege to user 1 on customer table in the invoice database.
+
+
+mysql> GRANT SELECT, INSERT ON Customer TO jahana@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SHOW GRANTS FOR 'jahana'@'localhost';
++----------------------------------------------------------------------+
+| Grants for jahana@localhost                                          |
++----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `jahana`@`localhost`                           |
+| GRANT SELECT, INSERT ON `INVOICE`.`Customer` TO `jahana`@`localhost` |
++----------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+
+Give update and delete privilege to user 2 on all tables in the invoice database.
+
+
+mysql> GRANT update, delete ON *.* TO frina@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW GRANTS FOR 'frina'@'localhost';
++----------------------------------------------------+
+| Grants for frina@localhost                         |
++----------------------------------------------------+
+| GRANT UPDATE, DELETE ON *.* TO `frina`@`localhost` |
++----------------------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+2.              REVOKE
+
+Remove delete privilege of user 2.
+
+
+
+mysql> REVOKE DELETE ON *.* FROM `frina`@`localhost`;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SHOW GRANTS FOR 'frina'@'localhost';
++--------------------------------------------+
+| Grants for frina@localhost                 |
++--------------------------------------------+
+| GRANT UPDATE ON *.* TO `frina`@`localhost` |
++--------------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
