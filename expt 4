@@ -108,6 +108,27 @@ mysql> select * from Customer order by city asc,name desc;
 
 
 
+mysql> select name from Customer where (name like'%a%'or name like '%e%') and name like'__%';
++------+
+| name |
++------+
+| abc  |
+| efg  |
++------+
+2 rows in set (0.00 sec)
 
 
-8.    List the names of customers their names have ‘r’ in second position.
+
+8.    List the names of customers their names have ‘b’ in second position.
+
+
+
+
+mysql> select name from Customer where name like'_b%';
++------+
+| name |
++------+
+| abc  |
++------+
+1 row in set (0.00 sec)
+
