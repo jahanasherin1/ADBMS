@@ -1,0 +1,105 @@
+ACCESSING DATABASE:  (SUBQUERY)
+
+1.    List the product name and price of each invoice item.
+
+
+
+
+mysql> select pname,price from Product where pid in(select pid from invoice_item);
++--------+-------+
+| pname  | price |
++--------+-------+
+| pencil |    25 |
+| soap   |    55 |
+| book   |    35 |
+| scale  |    15 |
++--------+-------+
+4 rows in set (0.00 sec
+
+
+
+
+2.    List the product names, only include their purchased quantity more than 3.
+
+
+
+
+mysql> select(select pname from Product where pid=invoice_item.pid)as pname from invoice_item where quantity > 3;
++----------+
+| pname    |
++----------+
+| bedsheet |
++----------+
+1 row in set (0.00 sec)
+
+
+
+
+3.    Find the product that has no sale.
+
+
+
+
+
+
+mysql> select pname from Product where pid not in (select pid from invoice_item);
++-------+
+| pname |
++-------+
+| pen   |
++-------+
+1 row in set (0.00 sec)
+
+
+
+
+4.    List the customer names who purchased the items ‘pen’ and ‘pencil’.
+
+
+
+
+mysql> select name from Customer where id in(select cust_id from invoice_master where inv_id in(select inv_id from invoice_item where pid in(select pid from Product where pname='pen' or pname='pencil')));
++------+
+| name |
++------+
+| abc  |
+| mno  |
++------+
+2 rows in set (0.00 sec)
+
+
+
+5.    Display the purchased product details of the customer ’xyz’.
+
+
+
+
+mysql> select * from Product where pid in(select pid from invoice_item where inv_id in(select inv_id from invoice_master where cust_id in(select id from Customer where name='xyz')));
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 104 | book  |    35 |
++-----+-------+-------+
+1 row in set (0.00 sec)
+
+
+
+
+
+6.    List the names of all customers who have purchased at least 2 products, make sure that no duplicate names in the result.
+
+
+
+
+
+mysql> select name from Customer where id in(select cust_id from invoice_master where inv_id in (select inv_id from invoice_item group by inv_id having count(pid)>=2));
++------+
+| name |
++------+
+| abc  |
++------+
+1 row in set (0.00 sec)
+
+
+
+
