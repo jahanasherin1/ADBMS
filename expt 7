@@ -117,7 +117,7 @@ mysql> SELECT *, (price + 5) AS new_price FROM Product;
 
 
 
-3.    Display customer details who doesn’t have phone number and lives in ‘Calicut’ city (use logical operators)
+3.    Display customer details who doesn’t have phone number and lives in ‘tkm’ city (use logical operators)
 
 
 
