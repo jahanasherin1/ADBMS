@@ -1,0 +1,37 @@
+PL/SQL - FUNCTIONS
+
+
+   1. Create a function to calculate price_range(low, medium, high) of each product. If price<=5 indicate as low, upto 50 indicate as    medium, and above as high.
+   
+   
+   
+mysql> create function price_range(price DECIMAL(10,2)) returns varchar(10) deterministic begin declare price_category varchar(10); set price_category = case when price <= 5 then 'low' when price <= 50 then 'medium' else 'high' end; return price_category; end//
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select pname,price_range(price) as price_range from Product//
++----------+-------------+
+| pname    | price_range |
++----------+-------------+
+| pen      | medium      |
+| pencil   | medium      |
+| soap     | high        |
+| book     | medium      |
+| scale    | medium      |
+| bedsheet | low         |
++----------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select pname,price,price_range(price) as price_range from Product//
++----------+-------+-------------+
+| pname    | price | price_range |
++----------+-------+-------------+
+| pen      |    10 | medium      |
+| pencil   |    25 | medium      |
+| soap     |    55 | high        |
+| book     |    35 | medium      |
+| scale    |    15 | medium      |
+| bedsheet |     5 | low         |
++----------+-------+-------------+
+6 rows in set (0.00 sec)
+
+  
