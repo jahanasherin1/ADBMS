@@ -6,7 +6,7 @@ PL/SQL -TRIGGER
 
 
 mysql> delimiter //
-mysql> create trigger cust_trig after update on Customer for each row begin insert into cust set cid = old.id,cname = old.name,addr = old.address,
+mysql> create trigger cust_trig after update on Customer for each row begin insert into cust set cid = old.id,cname = old.name,addr = old.address,ess,loc=old.city,phno=old.ph_no; end //
 Query OK, 0 rows affected (0.01 sec)
 
 mysql> create table cust(cid int primary key,cname varchar(10),addr varchar(20),loc varchar(10),phno int );
