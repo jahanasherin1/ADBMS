@@ -1,0 +1,87 @@
+PL/SQL -TRIGGER
+
+
+1.      Create a trigger to handle updates to the customer table.
+
+
+
+mysql> delimiter //
+mysql> create trigger cust_trig after update on Customer for each row begin insert into cust set cid = old.id,cname = old.name,addr = old.address,
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table cust(cid int primary key,cname varchar(10),addr varchar(20),loc varchar(10),phno int );
+Query OK, 0 rows affected (0.03 sec)
+
+
+mysql> select * from Customer;
++-------+------+-----------+---------+------------+
+| id    | name | address   | city    | ph_no      |
++-------+------+-----------+---------+------------+
+| 10001 | abc  | abc_house | calicut | 1234567890 |
+| 10002 | xyz  | xyz_house | ekm     | 1590437612 |
+| 10003 | pqr  | pqr_house | tkm     |  923654101 |
+| 10004 | efg  | efg_house | kdy     |  234095216 |
+| 10005 | mno  | mno_house | tkm     |       NULL |
+| 10006 | abc  | abc_house | tkm     | 1234567890 |
+| 10007 | xyz  | xyz_house | tkm     | 1590437612 |
++-------+------+-----------+---------+------------+
+7 rows in set (0.00 sec)
+
+mysql> update Customer set city="idukki" where id='10005' //
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+
+mysql> select * from Customer //
++-------+------+-----------+---------+------------+
+| id    | name | address   | city    | ph_no      |
++-------+------+-----------+---------+------------+
+| 10001 | abc  | abc_house | calicut | 1234567890 |
+| 10002 | xyz  | xyz_house | ekm     | 1590437612 |
+| 10003 | pqr  | pqr_house | tkm     |  923654101 |
+| 10004 | efg  | efg_house | kdy     |  234095216 |
+| 10005 | mno  | mno_house | idukki  |       NULL |
+| 10006 | abc  | abc_house | tkm     | 1234567890 |
+| 10007 | xyz  | xyz_house | tkm     | 1590437612 |
++-------+------+-----------+---------+------------+
+7 rows in set (0.00 sec)
+
+
+mysql> select * from cust //
++-------+-------+-----------+------+------+
+| cid   | cname | addr      | loc  | phno |
++-------+-------+-----------+------+------+
+| 10005 | mno   | mno_house | tkm  | NULL |
++-------+-------+-----------+------+------+
+1 row in set (0.00 sec)
+
+
+
+
+2.      Create a trigger to handle inserts to the product relation ( if price < 5 the set price to 10).
+
+
+mysql> create trigger prod_ins before insert on Product for each row begin if new.price < 5 then set new.price = 10;end if; end//
+Query OK, 0 rows affected (0.01 sec)
+
+
+mysql> insert into Product values (107,'eraser',3) //
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> select * from Product //
++-----+----------+-------+
+| pid | pname    | price |
++-----+----------+-------+
+| 101 | pen      |    10 |
+| 102 | pencil   |    25 |
+| 103 | soap     |    55 |
+| 104 | book     |    35 |
+| 105 | scale    |    15 |
+| 106 | bedsheet |     5 |
+| 107 | eraser   |    10 |
++-----+----------+-------+
+7 rows in set (0.00 sec)
+
+
