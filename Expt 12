@@ -26,11 +26,18 @@ invoice> db.CUSTOMER.insertMany([{cust_id:"1002",name:"Frina",phone:"1234567890"
 }
 
 
-invoice> db.PRODUCT.insertOne({p_id:"01",pname:"Pen",price:"100"},{p_id:"02",pname:"Pencil",price:"120"})
+invoice> db.PRODUCT.insertOne({p_id:01,pname:"Pen",price:100})
 {
   acknowledged: true,
-  insertedId: ObjectId('67fe2edba262cfa72aef6358')
+  insertedId: ObjectId('67fe3277a262cfa72aef635b')
 }
+
+invoice> db.PRODUCT.insertMany([{p_id:01,pname:"Pencil",price:150}])
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('67fe32aba262cfa72aef635c') }
+}
+
 
 
 2.      Write a MongoDB query to find all documents from the collection CUSTOMER
