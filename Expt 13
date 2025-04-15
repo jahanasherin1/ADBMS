@@ -1,0 +1,62 @@
+NoSQL- RETRIEVING DATA
+
+
+1.      Write a MongoDB query to display the customer documents having city ‘kdy’,’tkm’.
+
+
+invoice> db.CUSTOMER.find({city:{$in:["kdy","tkm"]}})
+[
+  {
+    _id: ObjectId('67fe2ecba262cfa72aef6355'),
+    cust_id: '1001',
+    name: 'Jahana',
+    phone: '8304084974',
+    city: 'kdy'
+  },
+  {
+    _id: ObjectId('67fe2ed7a262cfa72aef6356'),
+    cust_id: '1002',
+    name: 'Frina',
+    phone: '1234567890',
+    city: 'tkm'
+  }
+]
+
+2.     Write a MongoDB query to display all product documents their price >50.
+
+
+invoice> db.PRODUCT.find({price: {$gt: 50}})
+[
+  {
+    _id: ObjectId('67fe3277a262cfa72aef635b'),
+    p_id: 1,
+    pname: 'Pen',
+    price: 100
+  },
+  {
+    _id: ObjectId('67fe32aba262cfa72aef635c'),
+    p_id: 1,
+    pname: 'Pencil',
+    price: 150
+  }
+]
+
+
+
+3.     Write a MongoDB query to find customer documents who not live in ‘tvm’.
+
+
+
+invoice> db.CUSTOMER.find({city:{$nin:["tkm"]}})
+[
+  {
+    _id: ObjectId('67fe2ecba262cfa72aef6355'),
+    cust_id: '1001',
+    name: 'Jahana',
+    phone: '8304084974',
+    city: 'kdy'
+  }
+]
+
+
+
