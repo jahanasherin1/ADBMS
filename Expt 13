@@ -58,5 +58,5 @@ invoice> db.CUSTOMER.find({city:{$nin:["tkm"]}})
   }
 ]
 
-
+//VERIFIED
 
