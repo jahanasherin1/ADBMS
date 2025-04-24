@@ -1,0 +1,225 @@
+   
+   Replication
+
+
+
+step 1:
+
+mkdir -p node1 node2 node3
+
+
+step 2:
+
+Terminal 1:
+ mongod --replSet rs0 --port 30001 --dbpath ./node1 --bind_ip localhost
+ 
+Terminal 2:
+ mongod --replSet rs0 --port 27018 --dbpath ./node2 --bind_ip localhost
+
+Terminal 3:
+ mongod --replSet rs0 --port 27019 --dbpath ./node3 --bind_ip localhost
+ 
+step 3:
+
+mongosh --port 27017
+
+step 4:
+
+rs.initiate({
+_id: "rs0",
+members: [
+{ _id: 0, host: "localhost:30001" },
+{ _id: 1, host: "localhost:27018" },
+{ _id: 2, host: "localhost:27019" }
+]
+})
+
+
+output: { ok: 1 }
+
+step 5:
+
+rs.status()
+
+
+output:
+
+{
+  set: 'rs0',
+  date: ISODate('2025-04-24T09:18:56.335Z'),
+  myState: 1,
+  term: Long('1'),
+  syncSourceHost: '',
+  syncSourceId: -1,
+  heartbeatIntervalMillis: Long('2000'),
+  majorityVoteCount: 2,
+  writeMajorityCount: 2,
+  votingMembersCount: 3,
+  writableVotingMembersCount: 3,
+  optimes: {
+    lastCommittedOpTime: { ts: Timestamp({ t: 1745486333, i: 1 }), t: Long('1') },
+    lastCommittedWallTime: ISODate('2025-04-24T09:18:53.542Z'),
+    readConcernMajorityOpTime: { ts: Timestamp({ t: 1745486333, i: 1 }), t: Long('1') },
+    appliedOpTime: { ts: Timestamp({ t: 1745486333, i: 1 }), t: Long('1') },
+    durableOpTime: { ts: Timestamp({ t: 1745486333, i: 1 }), t: Long('1') },
+    lastAppliedWallTime: ISODate('2025-04-24T09:18:53.542Z'),
+    lastDurableWallTime: ISODate('2025-04-24T09:18:53.542Z')
+  },
+  lastStableRecoveryTimestamp: Timestamp({ t: 1745486303, i: 1 }),
+  electionCandidateMetrics: {
+    lastElectionReason: 'electionTimeout',
+    lastElectionDate: ISODate('2025-04-24T09:16:43.481Z'),
+    electionTerm: Long('1'),
+    lastCommittedOpTimeAtElection: { ts: Timestamp({ t: 1745486192, i: 1 }), t: Long('-1') },
+    lastSeenOpTimeAtElection: { ts: Timestamp({ t: 1745486192, i: 1 }), t: Long('-1') },
+    numVotesNeeded: 2,
+    priorityAtElection: 1,
+    electionTimeoutMillis: Long('10000'),
+    numCatchUpOps: Long('0'),
+    newTermStartDate: ISODate('2025-04-24T09:16:43.520Z'),
+    wMajorityWriteAvailabilityDate: ISODate('2025-04-24T09:16:44.048Z')
+  },
+  members: [
+    {
+      _id: 0,
+      name: '127.0.0.1:30001',
+      health: 1,
+      state: 1,
+      stateStr: 'PRIMARY',
+      uptime: 405,
+      optime: { ts: Timestamp({ t: 1745486333, i: 1 }), t: Long('1') },
+      optimeDate: ISODate('2025-04-24T09:18:53.000Z'),
+      lastAppliedWallTime: ISODate('2025-04-24T09:18:53.542Z'),
+      lastDurableWallTime: ISODate('2025-04-24T09:18:53.542Z'),
+      syncSourceHost: '',
+      syncSourceId: -1,
+      infoMessage: '',
+      electionTime: Timestamp({ t: 1745486203, i: 1 }),
+      electionDate: ISODate('2025-04-24T09:16:43.000Z'),
+      configVersion: 1,
+      configTerm: 1,
+      self: true,
+      lastHeartbeatMessage: ''
+    },
+    {
+      _id: 1,
+      name: '127.0.0.1:27018',
+      health: 1,
+      state: 2,
+      stateStr: 'SECONDARY',
+      uptime: 144,
+      optime: { ts: Timestamp({ t: 1745486333, i: 1 }), t: Long('1') },
+      optimeDurable: { ts: Timestamp({ t: 1745486333, i: 1 }), t: Long('1') },
+      optimeDate: ISODate('2025-04-24T09:18:53.000Z'),
+      optimeDurableDate: ISODate('2025-04-24T09:18:53.000Z'),
+      lastAppliedWallTime: ISODate('2025-04-24T09:18:53.542Z'),
+      lastDurableWallTime: ISODate('2025-04-24T09:18:53.542Z'),
+      lastHeartbeat: ISODate('2025-04-24T09:18:55.494Z'),
+      lastHeartbeatRecv: ISODate('2025-04-24T09:18:55.994Z'),
+      pingMs: Long('0'),
+      lastHeartbeatMessage: '',
+      syncSourceHost: '127.0.0.1:30001',
+      syncSourceId: 0,
+      infoMessage: '',
+      configVersion: 1,
+      configTerm: 1
+    },
+    {
+      _id: 2,
+      name: '127.0.0.1:27019',
+      health: 1,
+      state: 2,
+      stateStr: 'SECONDARY',
+      uptime: 144,
+      optime: { ts: Timestamp({ t: 1745486333, i: 1 }), t: Long('1') },
+      optimeDurable: { ts: Timestamp({ t: 1745486333, i: 1 }), t: Long('1') },
+      optimeDate: ISODate('2025-04-24T09:18:53.000Z'),
+      optimeDurableDate: ISODate('2025-04-24T09:18:53.000Z'),
+      lastAppliedWallTime: ISODate('2025-04-24T09:18:53.542Z'),
+      lastDurableWallTime: ISODate('2025-04-24T09:18:53.542Z'),
+      lastHeartbeat: ISODate('2025-04-24T09:18:55.493Z'),
+      lastHeartbeatRecv: ISODate('2025-04-24T09:18:54.493Z'),
+      pingMs: Long('0'),
+      lastHeartbeatMessage: '',
+      syncSourceHost: '127.0.0.1:30001',
+      syncSourceId: 0,
+      infoMessage: '',
+      configVersion: 1,
+      configTerm: 1
+    }
+  ],
+  ok: 1,
+  '$clusterTime': {
+    clusterTime: Timestamp({ t: 1745486333, i: 1 }),
+    signature: {
+      hash: Binary.createFromBase64('AAAAAAAAAAAAAAAAAAAAAAAAAAA=', 0),
+      keyId: Long('0')
+    }
+  },
+  operationTime: Timestamp({ t: 1745486333, i: 1 })
+}
+
+STEP 6:
+
+testDB> db.customers.insertOne({
+... name:"jahana",
+... age:21
+... })
+
+
+output:
+
+{
+  acknowledged: true,
+  insertedId: ObjectId('680a035c4c2d24f0acef634c')
+}
+
+
+step 7:
+
+in terminal 5:
+
+db.customers.find().pretty()
+[
+  {
+    _id: ObjectId('680a035c4c2d24f0acef634c'),
+    name: 'jahana',
+    age: 21
+  }
+]
+
+
+step 8:
+
+Terminal 5:
+ mongosh --port 27018
+ 
+testDB> use testDB
+switched to db testDB
+rs0 [direct: secondary] testDB> db.customers.find().pretty()
+[
+  {
+    _id: ObjectId('680a035c4c2d24f0acef634c'),
+    name: 'jahana',
+    age: 21
+  }
+]
+
+
+step 9:
+
+in terminal 6:
+ mongosh --port 27019
+
+test> use testDB
+switched to db testDB
+rs0 [direct: secondary] testDB> db.customers.find().pretty()
+[
+  {
+    _id: ObjectId('680a035c4c2d24f0acef634c'),
+    name: 'jahana',
+    age: 21
+  }
+]
+
+
