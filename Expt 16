@@ -222,4 +222,4 @@ rs0 [direct: secondary] testDB> db.customers.find().pretty()
   }
 ]
 
-
+//VERIFIED
